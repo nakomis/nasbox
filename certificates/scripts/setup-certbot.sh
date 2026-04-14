@@ -114,15 +114,38 @@ EOF
 ssh "${PI}" "sudo chmod +x ${RENEW_SCRIPT}"
 
 # ── 5. Obtain the initial certificate ─────────────────────────────────────────
+# The Mac calls the IoT credential provider using the cert we just downloaded
+# from SSM. This gives us temporary STS credentials without needing the AWS CLI
+# on the Pi. We pass them as environment variables over SSH so certbot on the Pi
+# can complete the Route53 DNS-01 challenge.
+log "Exchanging IoT certificate for temporary AWS credentials (on Mac)..."
+
+CREDS_JSON=$(mktemp)
+curl --silent --fail \
+  --cert <(echo "${CERT_PEM}") \
+  --key <(echo "${PRIV_KEY}") \
+  --cacert <(curl -sS https://www.amazontrust.com/repository/AmazonRootCA1.pem) \
+  "https://${IOT_ENDPOINT}/role-aliases/${ROLE_ALIAS}/credentials" \
+  -o "${CREDS_JSON}"
+
+ACCESS_KEY=$(jq -r '.credentials.accessKeyId'     "${CREDS_JSON}")
+SECRET_KEY=$(jq -r '.credentials.secretAccessKey' "${CREDS_JSON}")
+SESSION_TOK=$(jq -r '.credentials.sessionToken'   "${CREDS_JSON}")
+rm -f "${CREDS_JSON}"
+
 log "Obtaining initial certificate (this may take ~30s for DNS propagation)..."
-ssh "${PI}" "sudo ${RENEW_SCRIPT} || sudo certbot certonly \
-  --dns-route53 \
-  --dns-route53-propagation-seconds 30 \
-  --non-interactive \
-  --agree-tos \
-  --email ${EMAIL} \
-  -d ${DOMAIN} \
-  -d ${WILDCARD_DOMAIN}"
+ssh "${PI}" \
+  "AWS_ACCESS_KEY_ID=${ACCESS_KEY} \
+   AWS_SECRET_ACCESS_KEY=${SECRET_KEY} \
+   AWS_SESSION_TOKEN=${SESSION_TOK} \
+   sudo -E certbot certonly \
+     --dns-route53 \
+     --dns-route53-propagation-seconds 30 \
+     --non-interactive \
+     --agree-tos \
+     --email ${EMAIL} \
+     -d ${DOMAIN} \
+     -d ${WILDCARD_DOMAIN}"
 
 # ── 6. Set up systemd timer for automatic renewal ─────────────────────────────
 log "Setting up renewal timer..."
