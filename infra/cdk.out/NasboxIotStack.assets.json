@@ -1,0 +1,66 @@
+{
+  "version": "44.0.0",
+  "files": {
+    "78a30ed2d353b7b84f631fcf5cd4671b9108fee9d6206fb184d6d1da23837f98": {
+      "displayName": "NasboxThing/lambdaFunction/Code",
+      "source": {
+        "path": "asset.78a30ed2d353b7b84f631fcf5cd4671b9108fee9d6206fb184d6d1da23837f98",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "637423226886-eu-west-2": {
+          "bucketName": "cdk-hnb659fds-assets-637423226886-eu-west-2",
+          "objectKey": "78a30ed2d353b7b84f631fcf5cd4671b9108fee9d6206fb184d6d1da23837f98.zip",
+          "region": "eu-west-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::637423226886:role/cdk-hnb659fds-file-publishing-role-637423226886-eu-west-2"
+        }
+      }
+    },
+    "2819175352ad1ce0dae768e83fc328fb70fb5f10b4a8ff0ccbcb791f02b0716d": {
+      "displayName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code",
+      "source": {
+        "path": "asset.2819175352ad1ce0dae768e83fc328fb70fb5f10b4a8ff0ccbcb791f02b0716d",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "637423226886-eu-west-2": {
+          "bucketName": "cdk-hnb659fds-assets-637423226886-eu-west-2",
+          "objectKey": "2819175352ad1ce0dae768e83fc328fb70fb5f10b4a8ff0ccbcb791f02b0716d.zip",
+          "region": "eu-west-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::637423226886:role/cdk-hnb659fds-file-publishing-role-637423226886-eu-west-2"
+        }
+      }
+    },
+    "bdc104ed9cab1b5b6421713c8155f0b753380595356f710400609664d3635eca": {
+      "displayName": "NasboxThing/lambdaProvider/framework-onEvent/Code",
+      "source": {
+        "path": "asset.bdc104ed9cab1b5b6421713c8155f0b753380595356f710400609664d3635eca",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "637423226886-eu-west-2": {
+          "bucketName": "cdk-hnb659fds-assets-637423226886-eu-west-2",
+          "objectKey": "bdc104ed9cab1b5b6421713c8155f0b753380595356f710400609664d3635eca.zip",
+          "region": "eu-west-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::637423226886:role/cdk-hnb659fds-file-publishing-role-637423226886-eu-west-2"
+        }
+      }
+    },
+    "671c7d15668c2ab10fe5f071c01f5258371f6120fb55a44e7f2d6db5396a3722": {
+      "displayName": "NasboxIotStack Template",
+      "source": {
+        "path": "NasboxIotStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "637423226886-eu-west-2": {
+          "bucketName": "cdk-hnb659fds-assets-637423226886-eu-west-2",
+          "objectKey": "671c7d15668c2ab10fe5f071c01f5258371f6120fb55a44e7f2d6db5396a3722.json",
+          "region": "eu-west-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::637423226886:role/cdk-hnb659fds-file-publishing-role-637423226886-eu-west-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

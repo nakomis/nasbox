@@ -33,6 +33,10 @@ WILDCARD_DOMAIN="*.nasbox.nakomis.com"
 EMAIL="martin@nakom.is"
 ROLE_ALIAS="NasboxRoleAlias"
 IOT_DIR="/etc/iot"
+AWS_REGION="eu-west-2"
+
+# Ensure all AWS CLI calls hit the right region
+export AWS_DEFAULT_REGION="${AWS_REGION}"
 RENEW_SCRIPT="/usr/local/bin/certbot-renew-nasbox.sh"
 
 # ── 1. Fetch IoT credentials from SSM (runs on Mac with SSO) ─────────────────
