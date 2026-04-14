@@ -13,7 +13,7 @@ The ESP32 buffers log lines to a file on its flash (SPIFFS or LittleFS), then PO
 #include <HTTPClient.h>
 #include <LittleFS.h>
 
-const char* LOGSERVER_URL = "http://nasbox.local:8765/logs/my-device";
+const char* LOGSERVER_URL = "https://logs.nasbox.nakomis.com/logs/my-device";
 const char* LOG_TOKEN     = "change-me-to-something-long";
 const char* LOG_FILE      = "/pending.log";
 

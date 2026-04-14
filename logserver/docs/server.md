@@ -9,7 +9,7 @@ A minimal FastAPI service running on the nasbox that accepts log file uploads fr
 Upload a log file for a device. The request body is the raw log content (text/plain).
 
 ```
-POST http://nasbox.local:8765/logs/garage-sensor
+POST https://logs.nasbox.nakomis.com/logs/garage-sensor
 Authorization: Bearer <token>
 Content-Type: text/plain
 
