@@ -110,11 +110,11 @@ export class NasboxIotStack extends cdk.Stack {
       description: 'IoT role alias — used by the Pi to obtain temporary credentials',
     });
     new cdk.CfnOutput(this, 'SsmCertParam', {
-      value: '/nasbox/certPem',
+      value: `/nasbox/${THING_NAME}/certPem`,
       description: 'SSM parameter containing the device certificate PEM',
     });
     new cdk.CfnOutput(this, 'SsmPrivKeyParam', {
-      value: '/nasbox/privKey',
+      value: `/nasbox/${THING_NAME}/privKey`,
       description: 'SSM parameter containing the device private key',
     });
   }

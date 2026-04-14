@@ -19,8 +19,8 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 aws sts get-caller-identity --query Account --output text > /dev/null 2>&1 \
   || die "AWS credentials are not valid. Run: aws sso login --profile ${AWS_PROFILE}"
 
-aws ssm get-parameter --name "/nasbox/certPem" --query Name --output text > /dev/null 2>&1 \
-  || die "SSM parameter /nasbox/certPem not found. Deploy the CDK stack first: cd infra && npm install && cdk deploy NasboxIotStack"
+aws ssm get-parameter --name "/nasbox/nasbox/certPem" --query Name --output text > /dev/null 2>&1 \
+  || die "SSM parameter /nasbox/nasbox/certPem not found. Deploy the CDK stack first: cd infra && npm install && cdk deploy NasboxIotStack"
 
 ssh -q -o BatchMode=yes -o ConnectTimeout=5 "${PI:-nakomis@nasbox.local}" exit 2>/dev/null \
   || die "Cannot SSH to nasbox.local. Is the Pi on the network?"
@@ -42,13 +42,13 @@ RENEW_SCRIPT="/usr/local/bin/certbot-renew-nasbox.sh"
 # ── 1. Fetch IoT credentials from SSM (runs on Mac with SSO) ─────────────────
 log "Fetching IoT certificate from SSM..."
 CERT_PEM=$(aws ssm get-parameter \
-  --name "/nasbox/certPem" \
+  --name "/nasbox/nasbox/certPem" \
   --with-decryption \
   --query "Parameter.Value" \
   --output text)
 
 PRIV_KEY=$(aws ssm get-parameter \
-  --name "/nasbox/privKey" \
+  --name "/nasbox/nasbox/privKey" \
   --with-decryption \
   --query "Parameter.Value" \
   --output text)
