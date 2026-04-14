@@ -1,0 +1,19 @@
+# SD card / disk images
+*.img
+*.img.gz
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Secrets — never commit these
+.env
+*.key
+*.token
