@@ -32,30 +32,21 @@ npm install
 AWS_PROFILE=nakom.is cdk deploy NasboxIotStack
 ```
 
-Note the outputs — you'll need the credential provider endpoint (fetched separately):
+## Initial setup
+
+Run `certificates/scripts/setup-certbot.sh` **on your Mac** (not on the Pi). The script uses your SSO credentials to pull the IoT cert/key from SSM, then SSHes/SCPs everything to the Pi. The AWS CLI is not required on the Pi.
 
 ```bash
-AWS_PROFILE=nakom.is aws iot describe-endpoint \
-  --endpoint-type iot:CredentialProvider \
-  --query endpointAddress --output text
-```
-
-## Initial setup on the Pi
-
-Run `certificates/scripts/setup-certbot.sh` from the repo root:
-
-```bash
-scp certificates/scripts/setup-certbot.sh nakomis@nasbox.local:/home/nakomis/
-ssh nakomis@nasbox.local "sudo bash /home/nakomis/setup-certbot.sh"
+AWS_PROFILE=nakom.is bash certificates/scripts/setup-certbot.sh
 ```
 
 The script:
-1. Installs certbot and certbot-dns-route53
-2. Downloads the IoT certificate and private key from SSM Parameter Store
-3. Fetches the IoT credential provider endpoint
-4. Writes a certbot pre-hook that exchanges the IoT cert for temporary AWS credentials
-5. Runs certbot to obtain the initial certificate
-6. Installs a systemd timer for automatic renewal
+1. Fetches the IoT certificate, private key, and credential provider endpoint from AWS (on your Mac, using SSO)
+2. SCPs the certificate and key to `/etc/iot/` on the Pi
+3. Installs `certbot`, `python3-certbot-dns-route53`, and `jq` on the Pi via SSH
+4. Writes `/usr/local/bin/certbot-renew-nasbox.sh` onto the Pi — a wrapper that exchanges the IoT cert for temporary STS credentials (pure `curl`/`jq`, no AWS CLI) then runs certbot
+5. Obtains the initial certificate
+6. Installs a systemd timer (`certbot-renew-nasbox.timer`) for automatic twice-daily renewal attempts
 
 ## Certificate location
 
