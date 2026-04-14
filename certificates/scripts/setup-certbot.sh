@@ -11,6 +11,21 @@
 set -euo pipefail
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
+die() { echo "ERROR: $*" >&2; exit 1; }
+
+# ── Preflight checks ──────────────────────────────────────────────────────────
+[ -n "${AWS_PROFILE:-}" ] || die "AWS_PROFILE is not set. Run: export AWS_PROFILE=nakom.is"
+
+aws sts get-caller-identity --query Account --output text > /dev/null 2>&1 \
+  || die "AWS credentials are not valid. Run: aws sso login --profile ${AWS_PROFILE}"
+
+aws ssm get-parameter --name "/nasbox/certPem" --query Name --output text > /dev/null 2>&1 \
+  || die "SSM parameter /nasbox/certPem not found. Deploy the CDK stack first: cd infra && npm install && cdk deploy NasboxIotStack"
+
+ssh -q -o BatchMode=yes -o ConnectTimeout=5 "${PI:-nakomis@nasbox.local}" exit 2>/dev/null \
+  || die "Cannot SSH to nasbox.local. Is the Pi on the network?"
+
+log "Preflight checks passed."
 
 PI="nakomis@nasbox.local"
 DOMAIN="nasbox.nakomis.com"
