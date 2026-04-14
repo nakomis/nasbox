@@ -2,6 +2,12 @@
 
 A Raspberry Pi 5 NAS serving as a wireless Time Machine backup destination for multiple machines on the LAN.
 
+## Support
+
+If you find this useful, please consider buying me a coffee:
+
+[![Donate with PayPal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=Q3BESC73EWVNN&custom=nasbox)
+
 ## Hardware
 
 - Raspberry Pi 5 (2GB)
@@ -618,3 +624,9 @@ For a status display, `sysinfo` + `zbus` + `lvs --reportformat json` covers ever
 - **Remote LUKS unlock via AWS**: Replace the SD card keyfile with an HTTPS call to an AWS endpoint (Lambda + API Gateway) that only accepts requests from the home IP. Key material stored in AWS Secrets Manager. See [Trello card](https://trello.com/c/Ys0kOOVs/50-nas-replace-sd-keyfile-unlock-with-aws-endpoint-based-luks-unlock).
 - **Alpine Linux**: Rebuild on a minimal Alpine Linux image for smaller footprint and faster boot.
 - **Buildroot**: Eventually build a fully custom minimal OS image from scratch — educational goal.
+
+## Support
+
+If you find this useful, please consider buying me a coffee:
+
+[![Donate with PayPal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.com/donate?hosted_button_id=Q3BESC73EWVNN&custom=nasbox)
