@@ -10,6 +10,12 @@ __pycache__/
 .venv/
 venv/
 
+# Node / CDK
+node_modules/
+cdk.out/
+dist/
+*.js.map
+
 # macOS
 .DS_Store
 
