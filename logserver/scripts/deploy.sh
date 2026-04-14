@@ -30,7 +30,7 @@ After=network.target mnt-logs.mount
 
 [Service]
 User=nakomis
-ExecStart=/usr/bin/python3 -m uvicorn logserver:app --host 0.0.0.0 --port 8765
+ExecStart=/usr/bin/python3 -m uvicorn logserver:app --host 127.0.0.1 --port 8765
 WorkingDirectory=/home/nakomis
 Environment=LOG_TOKEN=change-me-to-something-long
 Restart=on-failure
