@@ -125,7 +125,7 @@ aws_session_token = \${SESSION_TOK}
 CREDS
 chmod 600 "\${AWS_CREDS_DIR}/credentials"
 
-certbot renew --dns-route53 --dns-route53-propagation-seconds 30 --quiet
+certbot renew --dns-route53 --quiet
 
 # trap EXIT cleans up credentials
 EOF
@@ -159,7 +159,6 @@ ssh "${PI}" \
    AWS_SESSION_TOKEN=${SESSION_TOK} \
    sudo -E certbot certonly \
      --dns-route53 \
-     --dns-route53-propagation-seconds 30 \
      --non-interactive \
      --agree-tos \
      --email ${EMAIL} \
