@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 LOG_DIR = Path(os.getenv("LOG_DIR", "/mnt/logs"))
@@ -25,7 +25,7 @@ def health() -> dict:
 
 
 @app.post("/logs/{device_name}")
-async def upload_log(device_name: str, request: Request, credentials: HTTPAuthorizationCredentials = bearer()) -> dict:
+async def upload_log(device_name: str, request: Request, credentials: HTTPAuthorizationCredentials = Depends(bearer)) -> dict:
     _check_token(credentials)
 
     if not device_name.replace("-", "").replace("_", "").isalnum():
