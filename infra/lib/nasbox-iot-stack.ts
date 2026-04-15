@@ -96,6 +96,19 @@ export class NasboxIotStack extends cdk.Stack {
     });
     policyAttachment.addDependency(iotPolicy);
 
+    // ── DNS A records ─────────────────────────────────────────────────────────
+    const piIp = '193.237.192.25';
+
+    for (const subdomain of ['nasbox', 'nakotp.nasbox', 'logs.nasbox']) {
+      new route53.ARecord(this, `ARecord-${subdomain.replace(/\./g, '-')}`, {
+        zone: hostedZone,
+        recordName: `${subdomain}.nakomis.com`,
+        target: route53.RecordTarget.fromIpAddresses(piIp),
+        ttl: cdk.Duration.minutes(5),
+        comment: `Pi home server — ${subdomain}.nakomis.com`,
+      });
+    }
+
     // ── Outputs ───────────────────────────────────────────────────────────────
     new cdk.CfnOutput(this, 'ThingArn', {
       value: thingArn,
