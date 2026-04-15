@@ -75,6 +75,19 @@ To trigger renewal manually:
 sudo certbot renew --force-renewal
 ```
 
+## Granting a service user access to the certificates
+
+The Let's Encrypt directories are root-only by default. Use `setfacl` to grant a specific service user read access without changing ownership. This needs to cover both `live/` (which contains the well-known paths) and `archive/` (where the actual files live — `live/` entries are symlinks into `archive/`).
+
+```bash
+sudo apt-get install -y acl
+sudo setfacl -R -m u:<service-user>:rX /etc/letsencrypt/live /etc/letsencrypt/archive
+```
+
+Replace `<service-user>` with the user the service runs as (e.g. `nakotp`). The `-R` flag applies the ACL recursively; `rX` grants read permission and execute on directories only.
+
+Re-run this command after adding a new service — the ACLs on `archive/` need to cover new versioned subdirectories created by certbot on each renewal.
+
 ## Adding services that use the certificate
 
 Add a post-renewal hook in `/etc/letsencrypt/renewal-hooks/post/`:
