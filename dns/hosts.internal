@@ -1,0 +1,9 @@
+# Internal DNS hosts — resolved by dnsmasq for the .internal TLD.
+# Add one entry per line: <IP>  <hostname>.internal
+#
+# Deployed to: /etc/hosts.internal
+# Applied by:  dns/scripts/setup.sh
+
+172.29.0.5   nasbox.internal
+172.29.0.5   nasbox.local
+172.29.0.20  homeassistant.internal
