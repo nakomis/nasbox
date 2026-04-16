@@ -5,4 +5,5 @@
 # Applied by:  dns/scripts/setup.sh
 
 172.29.0.5   nasbox.internal
+172.29.0.5   nasbox.local
 172.29.0.20  homeassistant.internal
